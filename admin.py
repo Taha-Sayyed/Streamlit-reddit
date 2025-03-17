@@ -5,6 +5,7 @@ import json
 import os
 from dotenv import load_dotenv
 import requests
+import time
 
 load_dotenv()
 api_key=os.getenv('API_KEY')
@@ -87,12 +88,17 @@ def delete_notification(notification_id):
 
 #Display Notifications in the Streamlit UI
 # Streamlit UI for Admin
-# Streamlit UI for Admin
+
 st.title("Admin Dashboard - View Notifications")
 
+
+
 if "user" in st.session_state and st.session_state["user"]["email"] == admin_gmail:  # Replace with admin email
-    notifications = get_notifications()
     
+    notifications = get_notifications()
+
+    if st.button("Refresh Notifications"):
+        st.rerun()
     if notifications:
         st.subheader("📩 Notifications")
         for note in notifications:
@@ -112,6 +118,7 @@ if "user" in st.session_state and st.session_state["user"]["email"] == admin_gma
                         st.rerun()
                 st.markdown("---")
     else:
-        st.write("🎉 No new notifications!")
+        st.write("🎉 No new notifications!")        
+                
 else:
     st.warning("⚠️ You must be logged in as an admin to view notifications.")
