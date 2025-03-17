@@ -22,7 +22,8 @@ def send_notification(sender_email, message):
     doc_ref = db.collection("notifications").add({
         "sender": sender_email,
         "message": message,
-        "timestamp": firestore.SERVER_TIMESTAMP
+        "timestamp": firestore.SERVER_TIMESTAMP,
+        "status":"unread"
     })
     return doc_ref
 
